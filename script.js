@@ -1,4 +1,3 @@
-// Assignment Code vvvvvvv
 var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
@@ -11,75 +10,74 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
-//Assignment code ^^^^^^^^
 
-//My code
 
-//Variables
-
+//Declaring global variables
 var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-var numberchars = "1234567890";
+var numberChars = "1234567890";
 var symbolChars = "!@#$%^&*()";
-var passwd = '';
 
 //Ask the user what types of characters they want their password to include
-function askParameters() {
-  //asking if they want lowercase letters
-  var lowercase = window.confirm("Would you like to add lowercase letters?");
-    console.log("lowercase is: " + lowercase)
+function generatePassword() {
 
-  //asking if they want uppercase letters
-  var uppercase = window.confirm("Would you like to add uppercase letter?");
-    console.log("uppercase is: " + uppercase);
-  //asking if they want numbers
-  var numbrs = window.confirm("Would you like to add numbers?");
-    console.log("numbers is: " + numbrs);
-  //asking if they want special characters
-  var specialChars = window.confirm("Would you like to add special characters?")
-    console.log("special characters is: " + specialChars);
+  window.alert("To create a random password, please answer the following prompts. Select 'OK' for yes and 'cancel' for no.")
   //asking the user how long they want their password to be
   var length = window.prompt("How long would you like your password to be? (8-128)")
     if (length > 8 && length <128) {
       console.log("password length is: " + length);
-    } else {  //giving the user a warning if they do not chose between 8-128 characters
-      window.alert("your passwords needs to be between 8 and 128 characters long")
+    } 
+  //giving the user a error if they do not chose between 8-128 characters 
+  if (length < 8 || length > 128) {
+    window.alert("Your password needs to be between 8 and 128 characters long")
+    return
+  }
+  //asking if they want lowercase letters
+  var incLowerCase = window.confirm("Would you like to add lowercase letters?");
+    console.log("lowercase is: " + incLowerCase);
+
+  //asking if they want uppercase letters
+  var incUpperCase = window.confirm("Would you like to add uppercase letter?");
+    console.log("uppercase is: " + incUpperCase);
+
+  //asking if they want numbers
+  var incNumbers = window.confirm("Would you like to add numbers?");
+    console.log("numbers is: " + incNumbers);
+
+  //asking if they want special characters
+  var incSymbols = window.confirm("Would you like to add special characters?")
+    console.log("special characters is: " + incSymbols);
+    //giving the user a error if they do not select any options
+    if (incLowerCase === false && incUpperCase === false && incNumbers === false && incSymbols === false) {
+      window.alert("You must selected at least one option");
       return
     }
-    
-}
-  //code to generate the password
 
-  function generatePassword() {
-    askParameters();
-  } 
-
+  var passResult = '';
+  var chosenChars = '';
   
-  generate.addEventListener("click", function(e) {
-
-    var characters = null;
-
-    if (lowercase === true) {
-      characters.concat(lowercaseChars)
-    }
-
-    passwd.value = passwordGen(length.value, characters)
-
-  });
-
-    
-    
-    
-   
-    
-    //code to generate the password
-  function passwordGen(passLength, characters) {
-    var pass = '';
-
-    for (var i = 0; i<passLength; i++) {
-        pass += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return pass
+  //adding characters to "chosenChar" string if they were chosen earlier 
+  if(incLowerCase) {
+    chosenChars += lowercaseChars
+  }
+  if(incUpperCase) {
+    chosenChars += uppercaseChars
+  }
+  if(incNumbers) {
+    chosenChars += numberChars
+  }
+  if(incSymbols) {
+    chosenChars += symbolChars
   }
 
-    console.log(passwd);
+  console.log("characters chosen are: " + chosenChars)
+  
+  //generating the password using all above inputed data
+  for (var i = 0; i < length; i++) {
+    passResult += chosenChars.charAt(Math.floor(Math.random() * chosenChars.length));
+  }
+  console.log(passResult)
+  //returning the result
+  return passResult
+}
+
